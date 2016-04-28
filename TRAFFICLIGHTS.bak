@@ -56,10 +56,10 @@ int main () {
 // This might change with the Rabbit
 void init_traffic_light(struct traffic_light *cur, char* name) {
 	cur->current_light = 3;
-	cur->delays[0] = 5;
-	cur->delays[1] = 1;
-	cur->delays[2] = 3;
-	cur->delays[3] = 1;
+	cur->delays[0] = 60;
+	cur->delays[1] = 5;
+	cur->delays[2] = 15;
+	cur->delays[3] = 2;
 	cur->light_name = name;
 }
 
