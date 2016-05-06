@@ -16,14 +16,16 @@ app.get('/', function (req, res) {
 
 app.get('/modify', function (req, res) {
   var rq = req.query;
-  //clog(rq);
+  //Validate numbers to see if a default of 5 should be set.
   for(var i in rq) {
     if(isNaN(rq[i])) {
       clog(rq[i] + ' is not a number. Setting equal to 5.');
       rq[i] = 5;
     }
   }
+  //create new light
   light = createLightCustom(rq.red_duration, rq.yellow_duration, rq.green_duration, rq.green_arrow_duration, light.current);
+  //restart light interval
   runLights(light, 0);
 });
 
@@ -48,6 +50,7 @@ var createLight = function() {
   };
 };
 
+//allow to set other predetermined values
 var createLightCustom = function(r,y,g,f,c) {
   return {
     green: g,

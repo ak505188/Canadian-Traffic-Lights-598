@@ -10,16 +10,18 @@
     <script>
 
         function start() {
+          //submit listener
           $("form").submit(function(event) {
+            //get values to be changed
              var values = {
                 red: $("#red_duration").val(),
                 yellow: $("#yellow_duration").val(),
                 green: $("#green_duration").val(),
                 greenArrow: $("#green_arrow_duration").val()
               }
-              
-              for(var v in values)
-              {
+             
+              //validate values to make sure they are numbers
+              for(var v in values) {
                 if(isNaN(values[v])) {
                   alert("Not a valid number. Try again.");
                   event.preventDefault();
