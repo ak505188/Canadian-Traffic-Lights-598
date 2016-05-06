@@ -24,7 +24,7 @@ app.get('/modify', function (req, res) {
     }
   }
   //create new light
-  light = createLightCustom(rq.red_duration, rq.yellow_duration, rq.green_duration, rq.green_arrow_duration, light.current);
+  light = createLightCustom(rq, light.current);
   //restart light interval
   runLights(light, 0);
 });
@@ -51,12 +51,12 @@ var createLight = function() {
 };
 
 //allow to set other predetermined values
-var createLightCustom = function(r,y,g,f,c) {
+var createLightCustom = function(r,c) {
   return {
-    green: g,
-    yellow: y,
-    flashing: f,
-    red: r,
+    green: r.green_duration,
+    yellow: r.yellow_duration,
+    flashing: r.green_arrow_duration,
+    red: r.red_duration,
     current: c
   };
 };
