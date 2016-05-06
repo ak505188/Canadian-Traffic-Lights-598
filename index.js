@@ -6,6 +6,7 @@ var spawn = require('child_process').spawn;
 var isDeveloping = process.env.NODE_ENV !== 'production';
 var port = isDeveloping ? 3000 : process.env.PORT;
 var hostname = process.env.HOSTNAME || '0.0.0.0';
+var running = false;
 
 app.use(express.static(__dirname + '/public'));
 
@@ -14,7 +15,16 @@ app.get('/', function (req, res) {
 });
 
 app.get('/modify', function (req, res) {
-  console.log(req.query);
+  var rq = req.query;
+  //clog(rq);
+  for(var i in rq) {
+    if(isNaN(rq[i])) {
+      clog(rq[i] + ' is not a number. Setting equal to 5.');
+      rq[i] = 5;
+    }
+  }
+  light = createLightCustom(rq.red_duration, rq.yellow_duration, rq.green_duration, rq.green_arrow_duration, light.current);
+  runLights(light, 0);
 });
 
 server.listen(port, hostname, function () {
@@ -38,11 +48,29 @@ var createLight = function() {
   };
 };
 
+var createLightCustom = function(r,y,g,f,c) {
+  return {
+    green: g,
+    yellow: y,
+    flashing: f,
+    red: r,
+    current: c
+  };
+};
+
 var light = createLight();
+var timer;
 
 function runLights(light, currentStartingPin) {
+  if(running) {
+    clearTimeout(timer);
+  }
+
+  if(!running) {
+    running = true;
+  }
   console.log(currentStartingPin, light.current);
-  setTimeout(function() {
+  timer = setTimeout(function() {
     switch(light.current) {
     case 'red':
       // Switch to other light then flashing
@@ -81,6 +109,10 @@ function switchLight(lightColor, currentStartingPin) {
 function initializeLights() {
   for (i = 0; i < 4; i++)
     lightSwitch(i, 1);
+}
+
+function clog(msg) {
+  console.log(msg);
 }
 
 initializeLights();
