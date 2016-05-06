@@ -93,7 +93,7 @@ function runLights(light, currentStartingPin) {
       light.current = 'green';
       break;
     default:
-      console.log('wtf');
+      console.log('There was an error switching lights');
     }
     switchLight(light.current, currentStartingPin);
     return runLights(light, currentStartingPin);
