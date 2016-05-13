@@ -51,7 +51,7 @@ function initializeLights() {
 }
 
 function lightSwitch(pin, toggle) {
-  spawn('bash', ['./gpio.sh', pin, toggle]);
+  spawn('bash', ['./pi_scripts/gpio.sh', pin, toggle]);
 }
 
 function switchLight(lightColor, currentStartingPin) {
